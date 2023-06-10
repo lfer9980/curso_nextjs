@@ -1,11 +1,14 @@
 import react from "react";
+import Navbar from "../components/Navbar";
+
 
 const About = () => {
-	return(
+	return (
 		<div>
-			<h1>
+			<Navbar />
+			<p>
 				Hola Mundo about
-			</h1>
+			</p>
 		</div>
 	);
 }
