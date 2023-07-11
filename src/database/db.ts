@@ -1,4 +1,4 @@
-import allData from "@/database/data";
+import allData from "@database/data";
 
 class Database {
 	constructor() { }

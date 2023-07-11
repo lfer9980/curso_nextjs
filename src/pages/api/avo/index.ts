@@ -1,12 +1,25 @@
-import { NextApiRequest, NextApiResponse } from "next";
-import DB from '@/database/db';
+import { IncomingMessage, ServerResponse } from 'http'
+import DB from '@database/db'
 
-const allAvos = async (request: NextApiRequest, response: NextApiResponse) => {
-	const db = new DB();
-	const allEntries = await db.getAll();
-	const length = allEntries.length
+const allAvos = async (req: IncomingMessage, res: ServerResponse) => {
+	try {
+		const db = new DB()
+		const allEntries = await db.getAll()
+		const lenght = allEntries.length
 
-	response.status(200).json({length: length, data: allEntries})
+		// Notice: We're manually setting the response object
+		// However Next.JS offers Express-like helpers :)
+		// https://nextjs.org/docs/api-routes/response-helpers
+		res.statusCode = 200
+		res.setHeader('Content-Type', 'application/json')
+		res.end(JSON.stringify({ lenght, data: allEntries }))
+	} catch (e) {
+		console.error(e)
+		res.statusCode = 500
+		res.end(
+			JSON.stringify({ length: 0, data: [], error: 'Something went wrong' })
+		)
+	}
 }
 
-export default allAvos;
+export default allAvos
